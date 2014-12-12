@@ -1,0 +1,18 @@
+{
+    "name": "ed-fruty/strange-observer",
+    "description": "JFF php objects observer",
+    "autoload" : {
+        "psr-4" : {
+            "Fruty\\Observe\\" : "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "fruty",
+            "email": "ed.fruty@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
