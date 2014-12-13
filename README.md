@@ -14,7 +14,7 @@ For such cases you can use this strange observer ;)
 Install package via composer
   
   ```bash
-  composer require "ed-fruty/strange-observer": "1.0.0"
+  composer require "ed-fruty/strange-php-observer": "1.0.0"
 ```
 
 #Usage
