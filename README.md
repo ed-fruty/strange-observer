@@ -96,6 +96,8 @@ For example we have class `User` with method `register($attributes)` and we want
   $user->register(array('username' => 'root', 'email' => 'root@iam.com'));
   ```
   
+  and before regitration will execute validaion, and after - sending email.
+  
   We can set priorities to the listeners
   
   ```php
@@ -147,7 +149,7 @@ As can see we in code uses 3 calling methods
 So, when you bind method
 
   ```php
-  $user->bind('getOne', function($userId)
+  $user()->bind('getOne', function($userId)
   {
     //$this is instance of Invoker, methods will remap to the instance of User and they can be listened
     //$this(true) is instance of User, methods cannot be listened
