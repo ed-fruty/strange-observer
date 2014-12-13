@@ -27,7 +27,7 @@ For example we have class `User` with method `register($attributes)` and we want
   use Fruty\Observe\Manager;
   use Fruty\Observe\Event;
   
-  class User
+  class User extends SomeClass
   {
     /**
      * @access public
@@ -79,7 +79,8 @@ For example we have class `User` with method `register($attributes)` and we want
   $user()->after('register', function(Event $event)
   {
     if ($event->getResult()) {
-      // in $event->getResult() result of executed method, in our case it is boolean and if it true - registration was successfull, so send email
+      // in $event->getResult() result of executed method, in our case it is boolean 
+      // and if it true - registration was successfull, so send email
       $email = $event->getParams()[0]['email'];
       $mailer = new Mailer();
       $mailer->body("Congratulations!")
@@ -104,12 +105,13 @@ For example we have class `User` with method `register($attributes)` and we want
   
   $user()->before('register', function(Event $event)
   {
-    // this code will be executed early than validation, because it have higher priority (Event::PRIORITY_HIGH)
+    // this code will be executed early than validation
+    // because it have higher priority (Event::PRIORITY_HIGH)
   }, Event::PRIORITY_HIGH);
   
   ```
   
-  Also, we can bind new methods dinamically to the $user
+  Also, we can bind new methods dynamically to the $user
   
   ```php
   
@@ -121,24 +123,23 @@ For example we have class `User` with method `register($attributes)` and we want
   $user->updateLastLoginTime(5);
   ```
   
-  We can redeclare existing methods
+  We can redefine existing methods
   
   ```php
   
-  $user()->bind('register', function(array $attributes, $sendMailNotification = true)
+  $user()->bind('register', function(array $attributes, $setAdminStatus)
   {
-    // call parent method
-    $this(true)->register($attributes);
-    if ($sendMailNotification) {
-      // you can use $this and $this(true)
-      $this->sendMailNotification();
+    if ($setAdminStatus) {
+      $attributes['admin'] = true;
     }
+    // call parent method
+    return $this(true)->register($attributes);
   });
   
   $user->register(array('username' => 'root', 'email' => 'root@iam.com'), true);
   ```
   
-As can see we in code uses 3 calling methods
+As you can see, in the code we uses 3 calling methods
   1. `$user->method()`
   2. `$user()->method()`
   3. `$user(true)->method()`
@@ -172,15 +173,17 @@ So, when you bind method
   We can add subscriber to the `$user` calls
   
   ```php
+  use Fruty\Observe\Event;
+  use Fruty\Observe\AbstractSubscriber;
   
-  class UserSubscriber extends Fruty\Observe\AbstractSubscriber
+  class UserSubscriber extends AbstractSubscriber
   {
     /**
      * This method will call before calling User::register()
      *
      * @access public
      * @static 
-     * @param Event $event
+     * @param \Fruty\Observe\Event $event
      */
     public static function onBeforeRegister(Event $event)
     {
@@ -192,7 +195,7 @@ So, when you bind method
      *
      * @access public
      * @static 
-     * @param Event $event
+     * @param \Fruty\Observe\Event $event
      */
     public static function onAfterRegister(Event $event)
     {
@@ -215,6 +218,7 @@ So, when you bind method
      }
   }
   
+  // register subscriber
   $user()->subscribe('UserSubscriber');
   
   ```
