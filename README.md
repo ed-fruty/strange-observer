@@ -9,7 +9,8 @@ But functional of this class does not satisfy to our needs.
 
 For such cases you can use this strange observer ;)
 
-#Installation
+#Installation 
+
 
 Install package via composer
   
