@@ -1,13 +1,13 @@
 Strange PHP observer (JFF)
 ================
 
-Sometimes we need to listen class calling actions, but for example we haven't access/permissions to edit it and paste here event fire.
+Sometimes we need to listen class calling actions, but for example we haven't permissions to edit it.
 
-Sometimes we have some instance of class and we work with it and we can't extend this class. (For example Database class. Instance was created and if we try to create new extend instance - new connection will be created. Or class can be final)
+Sometimes we have some instance of class only and we can't extend this class. (For example Database class. Instance was created and if we try to create new extend instance - new connection will be created. Or class can be final etc.)
 
 But functional of this class does not satisfy to our needs.
 
-For this actions you can use this strange observer ;)
+For such cases you can use this strange observer ;)
 
 #Installation
 
@@ -139,7 +139,7 @@ For example we have class `User` with method `register($attributes)` and we want
   $user->register(array('username' => 'root', 'email' => 'root@iam.com'), true);
   ```
   
-As you can see, in the code we uses 3 calling methods
+As you can see, in the code we uses 3 types of calling methods
   1. `$user->method()`
   2. `$user()->method()`
   3. `$user(true)->method()`
